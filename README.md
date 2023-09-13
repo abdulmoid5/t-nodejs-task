@@ -18,7 +18,7 @@ cd theo-nodejs-task
 
 3. **Set up the environment variables:**
 
-   - See the `.env.example` files in the root directories for the necessary environment variables.
+- See the `.env.example` files in the root directory for the necessary environment variables.
 
 4. **Install node module:**
 
@@ -31,3 +31,6 @@ yarn install
 ```bash
 yarn dev
 ```
+
+6. **Import postman json:**
+- You will find postman json in the `postman_json` folder in the root directory, and import that json in the postman.
