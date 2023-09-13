@@ -33,4 +33,4 @@ yarn dev
 ```
 
 6. **Import postman json:**
-- You will find postman json in the `postman_json` folder in the root directory, and import that json in the postman.
+- You will find postman json in the root directory with named as `postman_json`, import that json in the postman.
