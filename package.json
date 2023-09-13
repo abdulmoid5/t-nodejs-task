@@ -2,9 +2,10 @@
   "name": "theo-nodejs-task",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node locally.ts",
+    "dev": "nodemon locally.ts"
   },
   "repository": {
     "type": "git",
@@ -18,11 +19,20 @@
   },
   "homepage": "https://github.com/abdulmoid5/theo-nodejs-task#readme",
   "devDependencies": {
-    "@types/node": "^20.6.0"
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.6.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
+    "babel-plugin-module-resolver": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.1"
   }
 }
