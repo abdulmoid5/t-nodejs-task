@@ -7,10 +7,10 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,         
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    },              
+    // "baseUrl": ".",
+    // "paths": {
+    //   "~/*": ["src/*"]
+    // },              
     "types": ["jasmine","node","jest","express"]
   },
   "exclude":[

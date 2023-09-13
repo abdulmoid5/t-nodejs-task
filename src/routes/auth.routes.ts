@@ -1,4 +1,5 @@
 import { Request, Response, Application, NextFunction } from "express";
+import { registerUser } from "../controllers/unauth/register";
 const multer = require("multer");
 const { loginUser } = require("../controllers/unauth/login");
 // const { registerUser } = require("../controllers/unauth/register");
@@ -12,7 +13,7 @@ const nocache = (_: Request, resp: Response, next: NextFunction) => {
 };
 
 module.exports = function (app: Application) {
-  //   router.post("/register", registerUser);
+  router.post("/signup", registerUser);
   router.post("/login", loginUser);
   app.use(multer().none());
   app.use("/", router);

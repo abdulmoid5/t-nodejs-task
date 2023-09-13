@@ -4,9 +4,9 @@ module.exports = {
     [
       "module-resolver",
       {
-        alias: {
-          "~": "./src",
-        },
+        // alias: {
+        //   "~": "./src",
+        // },
         extensions: [".js", ".jsx", ".json", ".tsx", ".ts"],
       },
     ],

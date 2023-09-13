@@ -29,6 +29,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 require("./src/routes/auth.routes")(app);
-require("./src/routes/unauth.routes")(app);
+// require("./src/routes/unauth.routes")(app);
 
 module.exports = app;

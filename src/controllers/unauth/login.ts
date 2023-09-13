@@ -1,82 +1,66 @@
-// const { connection } = require("../../config/databse");
 import { Request, Response } from "express";
 import { ErrorCodes } from "../../helper/ErrorCodes";
-import { ErrorHandler } from "~/helper/Errors";
-import { SuccessHandler } from "~/helper/Success";
+import { EmailValidator, ErrorHandler, Validator } from "../..//helper/Errors";
+import { SuccessHandler } from "../../helper/Success";
+import { uuidv4 } from "../../utils/uuidv4";
+import { config } from "../../config";
 
-// const {
-//   ErrorHandler,
-//   DBQueryError,
-//   Validator,
-//   EmailValidator,
-// } = require("../../helper/Errors");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
+
+const SomePasswords = [
+  "Aa@123456789",
+  "Aa@12345",
+  "123456789",
+  "12345678",
+  "12345",
+  "admin",
+];
 
 const login = async (req: Request, resp: Response) => {
   try {
-    // const email = EmailValidator(resp, req?.body.email, "email", "Email ");
-    // if (!email) return;
-    // const password = Validator(resp, req?.body.password, "password", "Pasword ");
-    // if (!password) return;
-
-    new SuccessHandler(
+    const email = EmailValidator(resp, req?.body.email, "email", "Email ");
+    if (!email) return;
+    const password = Validator(
       resp,
-      null,
-      ErrorCodes.userNotFound,
-      "Invalid Credentials!"
+      req?.body.password,
+      "password",
+      "Pasword "
     );
-    return;
+    if (!password) return;
 
-    // const query = `SELECT * FROM users WHERE email='${email}' LIMIT 1`;
-    // connection.query(query, async function (err, result) {
-    //   if (err) {
-    //     DBQueryError(resp, err);
-    //     return;
-    //   }
-    //   if (result.length == 0) {
-    //     new SuccessHandler(
-    //       resp,
-    //       null,
-    //       LoginErrorCodes.userNotFound,
-    //       "User does not exist!"
-    //     );
-    //     return;
-    //   }
+    if (SomePasswords.includes(password)) {
+      const user = {
+        email,
+        id: uuidv4(),
+      };
 
-    //   const hashedPassword = result[0].password;
-    //   //get the hashedPassword from result
-    //   if (await bcrypt.compare(password, hashedPassword)) {
-    //     let user = JSON.parse(JSON.stringify(result[0]));
-    //     delete user["password"];
+      const token = jwt.sign(
+        {
+          userId: user.id,
+        },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: config.jwtExpiresIn,
+        }
+      );
 
-    //     const token = jwt.sign(
-    //       {
-    //         userId: user.id,
-    //       },
-    //       process.env.JWT_SECRET_KEY,
-    //       {
-    //         expiresIn: config.jwtExpiresIn,
-    //       }
-    //     );
+      new SuccessHandler(resp, { ...user, token }, 200, "Login Success");
 
-    //     new SuccessHandler(resp, { ...user, token });
-    //     return;
-    //   } else {
-    //     new SuccessHandler(
-    //       resp,
-    //       null,
-    //       LoginErrorCodes.userNotFound,
-    //       "Invalid Credentials!"
-    //     );
-    //     return;
-    //   } //end of bcrypt.compare()
-    // });
+      return;
+    } else {
+      new SuccessHandler(
+        resp,
+        null,
+        ErrorCodes.userNotFound,
+        "Invalid Credentials!"
+      );
+      return;
+    }
   } catch (error) {
     new ErrorHandler(
       resp,
       ErrorCodes.somethingwentwrong,
-      "Something went wrong!"
+      (error as { message: string }).message || "Something went wrong!"
     );
   }
   return;
